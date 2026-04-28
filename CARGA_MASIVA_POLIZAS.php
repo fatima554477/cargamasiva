@@ -208,7 +208,7 @@ $querycontras = $conexion->listadoCARGAMASIVAP();
 	$row4 = mysqli_fetch_array($querycontrasnombre);
       ?>
 
-     <tr style='background:#f5f9fc;text-align:center'>
+      <table class="table table-striped table-bordered" style="width:100%"  id="reseteateP" name="reseteateP">
 
        <td><?php echo $row["id"]; ?></td>
        <td><?php echo $row["DEPARTAMENTO"]; ?></td>

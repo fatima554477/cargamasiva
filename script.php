@@ -163,7 +163,7 @@ $(document).on('click', '.view_dataVPCARGAMM', function(){
 
              function estiloColaborador(indice){
 	                var estilos = [
-	                    {texto:'#1e3a8a', fondo:'#dbeafe'},
+	                    {texto:'#1e3a8a', fondo:'#e0f2fe'},
 	                    {texto:'#6b21a8', fondo:'#f3e8ff'},
 	                    {texto:'#0f766e', fondo:'#ccfbf1'},
 	                    {texto:'#9a3412', fondo:'#ffedd5'},
@@ -182,6 +182,7 @@ $(document).on('click', '.view_dataVPCARGAMM', function(){
                     data: {depart:deptid},
                     dataType: 'json',
                     success:function(response){
+						
 
                         var len = response.length;
 
@@ -210,6 +211,7 @@ $(document).on('click', '.view_dataVPCARGAMM', function(){
                     data: {depart:deptid},
                     dataType: 'json',
                     success:function(response){
+						$("#reseteateU").load(location.href + " #reseteateU");
 
                         var len = response.length;
 
@@ -237,6 +239,8 @@ $(document).on('click', '.view_dataVPCARGAMM', function(){
                     data: {depart:deptid},
                     dataType: 'json',
                     success:function(response){
+						$("#reseteateP").load(location.href + " #reseteateP");
+
 
                         var len = response.length;
 
