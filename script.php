@@ -58,50 +58,7 @@
 
 	<script type="text/javascript">
 	
-/*	var fileobj;
-	function upload_file(e,name) {
-	    e.preventDefault();
-	    fileobj = e.dataTransfer.files[0];
-	    ajax_file_upload1(fileobj,name);
-	}
-	 
-	function file_explorer(name) {
-	    document.getElementsByName(name)[0].click();
-	    document.getElementsByName(name)[0].onchange = function() {
-	        fileobj = document.getElementsByName(name)[0].files[0];
-	        ajax_file_upload1(fileobj,name);
-	    };
-	}
 
-	function ajax_file_upload1(file_obj,nombre) {
-	    if(file_obj != undefined) {
-	        var form_data = new FormData();                  
-	        form_data.append(nombre, file_obj);
-	        $.ajax({
-	            type: 'POST',
-	            url: 'colaboradores/controlador.php',
-	            contentType: false,
-	            processData: false,
-	            data: form_data,
- beforeSend: function() {
-$('#1'+nombre).html('<p style="color:green;">Cargando archivo!</p>');
-$('#mensajeADJUNTOCOL').html('<p style="color:green;">Actualizado!</p>');
-    },				
-	            success:function(response) {
-//alert(response);
-if($.trim(response) == 2 ){
-
-$('#1'+nombre).html('<p style="color:red;">Error, archivo diferente a PDF, JPG o GIF.</p>');
-$('#'+nombre).val("");
-}else{
-$('#'+nombre).val(response);
-$('#1'+nombre).html('<a target="_blank" href="includes/archivos/'+$.trim(response)+'">Visualizar!</a>');	
-}
-
-	            }
-	        });
-	    }
-	}*/
 
 	$(document).ready(function(){
 		
@@ -204,8 +161,20 @@ $(document).on('click', '.view_dataVPCARGAMM', function(){
 
 
 
-            $("#sel_depart").change(function(){
-                var deptid = $(this).val();
+             function estiloColaborador(indice){
+	                var estilos = [
+	                    {texto:'#1e3a8a', fondo:'#dbeafe'},
+	                    {texto:'#6b21a8', fondo:'#f3e8ff'},
+	                    {texto:'#0f766e', fondo:'#ccfbf1'},
+	                    {texto:'#9a3412', fondo:'#ffedd5'},
+	                    {texto:'#9f1239', fondo:'#ffe4e6'},
+	                    {texto:'#0c4a6e', fondo:'#e0f2fe'}
+	                ];
+	                return estilos[indice % estilos.length];
+	            }
+
+	            $("#sel_depart").change(function(){
+	                var deptid = $(this).val();
 
                 $.ajax({
                     url: 'cargamasiva/GetCargaMM.php',
@@ -216,12 +185,13 @@ $(document).on('click', '.view_dataVPCARGAMM', function(){
 
                         var len = response.length;
 
-                        $("#sel_user").empty();
-                        for( var i = 0; i<len; i++){
-                            var id = response[i]['id'];
-                            var NOMBRE_1 = response[i]['NOMBRE_1'];
-
-                            $("#sel_user").append("<option value='"+id+"'>"+NOMBRE_1+"</option>");
+                       $("#sel_user").empty();
+	                        $("#sel_user").append("<option value='0'>- Seleccione -</option>");
+	                        for( var i = 0; i<len; i++){
+	                            var id = response[i]['id'];
+	                            var NOMBRE_1 = response[i]['NOMBRE_1'];
+	                            var estilo = estiloColaborador(i);
+	                            $("#sel_user").append("<option style='color:"+estilo.texto+"; background-color:"+estilo.fondo+"; font-weight:600;' value='"+id+"'>"+NOMBRE_1+"</option>");
 
                         }
                     }
@@ -243,12 +213,13 @@ $(document).on('click', '.view_dataVPCARGAMM', function(){
 
                         var len = response.length;
 
-                        $("#sel_user2").empty();
-                        for( var i = 0; i<len; i++){
-                            var id = response[i]['id'];
-                            var NOMBRE_1 = response[i]['NOMBRE_1'];
-
-                            $("#sel_user2").append("<option value='"+id+"'>"+NOMBRE_1+"</option>");
+                             $("#sel_user2").empty();
+	                        $("#sel_user2").append("<option value='0'>- Seleccione -</option>");
+	                        for( var i = 0; i<len; i++){
+	                            var id = response[i]['id'];
+	                            var NOMBRE_1 = response[i]['NOMBRE_1'];
+	                            var estilo = estiloColaborador(i);
+	                            $("#sel_user2").append("<option style='color:"+estilo.texto+"; background-color:"+estilo.fondo+"; font-weight:600;' value='"+id+"'>"+NOMBRE_1+"</option>");
 
                         }
                     }
@@ -269,12 +240,13 @@ $(document).on('click', '.view_dataVPCARGAMM', function(){
 
                         var len = response.length;
 
-                        $("#sel_user3").empty();
-                        for( var i = 0; i<len; i++){
-                            var id = response[i]['id'];
-                            var NOMBRE_1 = response[i]['NOMBRE_1'];
-
-                            $("#sel_user3").append("<option value='"+id+"'>"+NOMBRE_1+"</option>");
+                         $("#sel_user3").empty();
+	                        $("#sel_user3").append("<option value='0'>- Seleccione -</option>");
+	                        for( var i = 0; i<len; i++){
+	                            var id = response[i]['id'];
+	                            var NOMBRE_1 = response[i]['NOMBRE_1'];
+	                            var estilo = estiloColaborador(i);
+	                            $("#sel_user3").append("<option style='color:"+estilo.texto+"; background-color:"+estilo.fondo+"; font-weight:600;' value='"+id+"'>"+NOMBRE_1+"</option>");
 
                         }
                     }
