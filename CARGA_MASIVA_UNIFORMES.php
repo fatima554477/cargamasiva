@@ -213,7 +213,7 @@ $querycontras = $conexion->listadoCARGAMASIVAu();
 
        <td><?php echo $row["id"]; ?></td>
        <td><?php echo $row["DEPARTAMENTO"]; ?></td>
-       <td COLSPAN="2"><?php echo $row4["NOMBRE_1"].' '.$row4["APELLIDO_PATERNO"].' '.$row4["APELLIDO_MATERNO"]; ?></td>
+       <td COLSPAN="2"><?php echo $row4["NOMBRE_1"].' '.$row4["NOMBRE_2"].' '.$row4["APELLIDO_PATERNO"].' '.$row4["APELLIDO_MATERNO"]; ?></td>
        <td><?php echo $row["CMU_ARTICULO"]; ?></td>
        <td><?php echo $row["CMU_CANTIDAD"]; ?></td>
        <td><?php echo $row["CMU_TALLA"]; ?></td>
