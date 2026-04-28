@@ -36,22 +36,32 @@
 					
 						<div class="col-md-4">
                           <strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label for="validationCustom02" class="form-label">DEPARTAMENTO:</label></strong>
-                          <select class="form-select mb-3" aria-label="Default select example" required="" name="DEPARTAMENTO2" id="sel_depart2"> 
- <option selected="">SELECCIONA UNA OPCIÓN</option>
- <option style="background: #c9e8e8" <?php if($DEPARTAMENTO == 'DIRECCION'){echo "selected";}; ?> value="DIRECCION">DIRECCIÓN</option>
- <option style="background: #a3e4d7" <?php if($DEPARTAMENTO == 'VENTAS'){echo "selected";}; ?> value="VENTAS">VENTAS</option>
- <option style="background: #e8f6f3" <?php if($DEPARTAMENTO == 'OPERACIONES'){echo "selected";}; ?> value="OPERACIONES">OPERACIONES</option>
- <option style="background: #fdf2e9" <?php if($DEPARTAMENTO == 'DISENO'){echo "selected";}; ?> value="DISENO">DISEÑO</option>
- <option style="background: #eaeded" <?php if($DEPARTAMENTO == 'VUELOS'){echo "selected";}; ?> value="VUELOS">VUELOS</option>
- <option style="background: #fdebd0" <?php if($DEPARTAMENTO == 'SISTEMAS'){echo "selected";}; ?> value="SISTEMAS">SISTEMAS</option>
- <option style="background: #ebdef0" <?php if($DEPARTAMENTO == 'BACK_STAGE'){echo "selected";}; ?> value="BACK_STAGE">BACK STAGE</option>
- <option style="background: #d6eaf8" <?php if($DEPARTAMENTO == 'ADMINISTRACION'){echo "selected";}; ?> value="ADMINISTRACION">ADMINISTRACION</option>
- <option style="background: #fef5e7" <?php if($DEPARTAMENTO == 'AUDITORIA'){echo "selected";}; ?> value="AUDITORIA">AUDITORIA</option>
- <option style="background: #ebedef" <?php if($DEPARTAMENTO == 'CONTABILIDAD'){echo "selected";}; ?> value="CONTABILIDAD">CONTABILIDAD</option>
- <option style="background: #fbeee6" <?php if($DEPARTAMENTO == 'CAPITAL_HUMANO'){echo "selected";}; ?> value="CAPITAL_HUMANO">CAPITAL HUMANO</option>
- <option style="background: #e8f6f3" <?php if($DEPARTAMENTO == 'RECEPCION'){echo "selected";}; ?> value="RECEPCION">RECEPCIÓN</option>
- <option style="background: #c9e8e8" <?php if($DEPARTAMENTO == 'LIMPIEZA'){echo "selected";}; ?> value="LIMPIEZA">LIMPIEZA</option>
-    </select>
+                          <?php
+$encabezado = '';
+$option = '';
+$queryper = $conexion->desplegables07('LISTADO_COLABORADORES','DEPARTAMENTO');
+
+$opciones = array();
+while($row1 = mysqli_fetch_array($queryper)) {
+    $opciones[] = $row1;
+}
+usort($opciones, function($a, $b) {
+    return strcasecmp($a['nombre_campo'], $b['nombre_campo']);
+});
+
+$encabezado = '<select class="form-select mb-3" aria-label="Default select example" id="sel_depart2" required="" name="DEPARTAMENTO2">'
+           . '<option value="">SELECCIONA UNA OPCIÓN</option>';
+$fondos = array("fff0df","f4ffdf","dfffed","dffeff","dfe8ff","efdfff","ffdffd","efdfff","ffdfe9");
+$num = 0;
+
+foreach($opciones as $row1) {
+    $num = ($num == 8) ? 0 : $num + 1;
+    $select = ($DEPARTAMENTO == $row1['nombre_campo']) ? "selected" : "";
+    $option .= '<option style="background: #'.$fondos[$num].'" '.$select.' value="'.$row1['nombre_campo'].'">'.strtoupper($row1['nombre_campo']).'</option>';
+}
+
+echo $encabezado.$option.'</select>';
+?>
 	</div>
 	
 						
