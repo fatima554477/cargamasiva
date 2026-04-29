@@ -4,7 +4,7 @@
 			<hr/>
 			<strong>  <p class="mb-0 text-uppercase">
 <img src="includes/contraer31.png" id="mostrar3" style="cursor:pointer;"/>
-<img src="includes/contraer41.png" id="ocultar3" style="cursor:pointer;"/>&nbsp;&nbsp;&nbsp;CARGA MASIVA DE PÓLIZAS Y DOCUMENTOS</p><div  id="mensajeCARGAMASIVAP"><div class="progress" style="width: 25%;">
+<img src="includes/contraer41.png" id="ocultar3" style="cursor:pointer;"/>&nbsp;&nbsp;&nbsp;CARGA MASIVA DE PÓLIZAS Y DOCUMENTOS</p><div  id="mensajeCARGAMASIVAP2"><div class="progress" style="width: 25%;">
 									<div class="progress-bar" role="progressbar" style="width: <?php echo $ROWCARGAMASIVAP; ?>%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><?php echo $ROWCARGAMASIVAP; ?>%</div></div>
 								</div></div></strong>
 			   
@@ -137,7 +137,29 @@ echo $encabezado.$option.'</select>';
                    
             <th>
 
-	   <button class="btn btn-sm btn-outline-success px-5"  type="button" id="enviarCARGAMASIVAP">GUARDAR</button>
+	   <button class="btn btn-sm btn-outline-success px-5"  type="button" id="enviarCARGAMASIVAP">GUARDAR</button><div style="
+    color: #f5f5f5;
+    text-shadow: 1px 1px 1px #919191,
+        1px 2px 1px #919191,
+        1px 3px 1px #919191,
+        1px 4px 1px #919191,
+        1px 5px 1px #919191,
+        1px 6px 1px #919191,
+        1px 7px 1px #919191,
+        1px 8px 1px #919191,
+        1px 9px 1px #919191,
+        1px 10px 1px #919191,
+    1px 18px 6px rgba(16,16,16,0.4),
+    1px 22px 10px rgba(16,16,16,0.2),
+    1px 25px 35px rgba(16,16,16,0.2),
+    1px 30px 60px rgba(16,16,16,0.4);
+	@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 100; }
+}"
+
+
+ id="mensajeCARGAMASIVAP">
         </th><?php } ?>
                       
                   
@@ -208,7 +230,7 @@ $querycontras = $conexion->listadoCARGAMASIVAP();
 	$row4 = mysqli_fetch_array($querycontrasnombre);
       ?>
 
-      <table class="table table-striped table-bordered" style="width:100%"  id="reseteateP" name="reseteateP">
+     <tr style='background:#f5f9fc;text-align:center'>
 
        <td><?php echo $row["id"]; ?></td>
        <td><?php echo $row["DEPARTAMENTO"]; ?></td>

@@ -60,7 +60,19 @@
 	
 
 
-	$(document).ready(function(){
+$(document).ready(function(){
+		
+		function recargarSiExiste(selector){
+			if($(selector).length){
+				$(selector).load(location.href + " " + selector + " > *");
+			}
+		}
+
+		function recargarListadoInmediato(selectores){
+			$.each(selectores, function(_, selector){
+				recargarSiExiste(selector);
+			});
+		}
 		
 	
 	
@@ -97,11 +109,13 @@ $.ajax({
 })
 .done(function(data) {
 		if($.trim(data)=='Ingresado' || $.trim(data)=='Actualizado'){	
-			$("#reseteateCARGAMM").load(location.href + " #reseteateCARGAMM");
+			
 			$("#mensajeCARGAMASIVAM").html(data);
 			}else{
 			$("#mensajeCARGAMASIVAM").html(data);
+			
 		}
+		$("#reseteateCARGAMM").load(location.href + " #reseteateCARGAMM");
 })
 .fail(function() {
     console.log("detect error");
@@ -211,7 +225,7 @@ $(document).on('click', '.view_dataVPCARGAMM', function(){
                     data: {depart:deptid},
                     dataType: 'json',
                     success:function(response){
-						$("#reseteateU").load(location.href + " #reseteateU");
+						
 
                         var len = response.length;
 
@@ -355,6 +369,7 @@ $.ajax({
 			}else{
 			$("#mensajeCARGAMASIVAU").html(data);
 		}
+		$("#reseteateCARGAUM").load(location.href + " #reseteateCARGAUM");
 		
 })
 .fail(function() {
@@ -447,11 +462,12 @@ $.ajax({
 		if($.trim(data)=='Ingresado' || $.trim(data)=='Actualizado')
 		
 		{	
-			$("#reseteateCARGAPP").load(location.href + " #reseteateCARGAPP");
+			
 			$("#mensajeCARGAMASIVAP").html(data);
 			}else{
 			$("#mensajeCARGAMASIVAP").html(data);
 		}
+		$("#reseteateCARGAPP").load(location.href + " #reseteateCARGAPP");
 })
 .fail(function() {
     console.log("detect error");

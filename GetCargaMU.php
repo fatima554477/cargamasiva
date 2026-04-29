@@ -11,10 +11,18 @@ if (isset($_POST['depart'])) {
 
 $users_arr = array();
 
-$sql = "SELECT 01empresa.id AS empresa_id, USUARIO_CRM, NOMBRE_1, NOMBRE_2, APELLIDO_PATERNO, APELLIDO_MATERNO
-        FROM 01empresa, 01informacionpersonal
-        WHERE 01informacionpersonal.IdRelacion = 01empresa.id
-        AND DEPARTAMENTO = '".$departid."' ";
+$sql = "SELECT 01empresa.id AS empresa_id, 
+                USUARIO_CRM, 
+                NOMBRE_1, 
+                NOMBRE_2, 
+                APELLIDO_PATERNO, 
+                APELLIDO_MATERNO
+        FROM 01empresa
+        INNER JOIN 01informacionpersonal ON 01informacionpersonal.IdRelacion = 01empresa.id
+        INNER JOIN 01adjuntoscolaboradores ON 01adjuntoscolaboradores.IdRelacion = 01empresa.id
+        WHERE DEPARTAMENTO = '".$departid."'
+        AND 01adjuntoscolaboradores.ESTATUS_CRM_ACTIVOBAJA = 'ACTIVO'
+        ORDER BY NOMBRE_1 ASC, APELLIDO_PATERNO ASC, APELLIDO_MATERNO ASC";
 
 $result = mysqli_query($con, $sql);
 
