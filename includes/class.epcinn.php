@@ -1668,7 +1668,7 @@ public function revisar_usuario($conn,$USUARIO_CRM,$id){
 			$ext == 'docx' || $ext == 'doc'  || $ext == 'xml'  ||
 			$ext == 'xlsx' || $ext == 'xls'  || $ext == 'ppt'  ||
 			$ext == 'pptx' || $ext == 'txt'  || $ext == 'htm'  ||
-			$ext == 'webp'
+			$ext == 'webp' || $ext == 'xlsm'
 		){
 			if(move_uploaded_file($nombretemp, $nombre_carpeta.'/'.$nuevonombre)){
 				chmod($nombre_carpeta.'/'.$nuevonombre, 0755);
@@ -1701,7 +1701,7 @@ public function revisar_usuario($conn,$USUARIO_CRM,$id){
 			$ext == 'docx' || $ext == 'doc'  || $ext == 'xml'  ||
 			$ext == 'txt'  || $ext == 'xlsx' || $ext == 'xls'  ||
 			$ext == 'ppt'  || $ext == 'pptx' || $ext == 'htm'  ||
-			$ext == 'webp'
+			$ext == 'webp' || $ext == 'xlsm'  
 		){
 			if(move_uploaded_file($nombretemp, $nombre_carpeta.'/'.$nuevonombre)){
 				chmod($nombre_carpeta.'/'.$nuevonombre, 0755);
@@ -1750,7 +1750,7 @@ public function revisar_usuario($conn,$USUARIO_CRM,$id){
 			$ext == 'jpg'  || $ext == 'png'  || $ext == 'mp4'  ||
 			$ext == 'docx' || $ext == 'doc'  || $ext == 'xml'  ||
 			$ext == 'xlsx' || $ext == 'xls'  || $ext == 'ppt'  ||
-			$ext == 'pptx' || $ext == 'htm'  || $ext == 'webp'
+			$ext == 'pptx' || $ext == 'htm'  || $ext == 'webp'  || $ext == 'xlsm'
 		){
 			if(move_uploaded_file($nombretemp, $nombre_carpeta.'/'.$nuevonombre)){
 				chmod($nombre_carpeta.'/'.$nuevonombre, 0755);
@@ -3188,36 +3188,43 @@ public function guardarcategoriainventario ( $I_CATEGORIAS , $ICATEGORIAS ){
 		
 		
 			
-		if($ICARGAMM2 == 'ICARGAMM2'){
+if($ICARGAMM2 == 'ICARGAMM2'){
 
-		mysqli_query($conn,$var1) or die('P276'.mysqli_error($conn));
-		return "ACTUALIZADO";
-		}else{
-		mysqli_query($conn,$var2) or die('P279'.mysqli_error($conn));
-		return "INGRESADO";
-		}
-		}else{
-		echo "NO HAY UN USUARIO SELECCIONADO";	
-		}	
+    mysqli_query($conn,$var1) or die('P276'.mysqli_error($conn));
+    return "<span style='color:green; font-size:24px; font-weight:bold;'>ACTUALIZADO</span>";
+
+}else{
+
+    mysqli_query($conn,$var2) or die('P279'.mysqli_error($conn));
+    return "<span style='color:green; font-size:24px; font-weight:bold;'>INGRESADO</span>";
+
+}
+
+}else{
+    echo "NO HAY UN USUARIO SELECCIONADO";    
+}
 }
 
 
 
 
-	public function listadoCARGAMASIVAM(){
-		$conn = $this->db();
-		$variablequery = "select * from 01cargamasivamateriales  where idRelacion = '".$_SESSION['id']."' ";
-		return $arrayquery = mysqli_query($conn,$variablequery);
-	}
+public function listadoCARGAMASIVAM(){
+    $conn = $this->db();
+    $variablequery = "SELECT * 
+                      FROM 01cargamasivamateriales  
+                      WHERE idRelacion = '".$_SESSION['id']."' 
+                      ORDER BY id DESC";
+    return $arrayquery = mysqli_query($conn,$variablequery);
+}
 
 
 
 
-	public function listadoCARGAMASIVAMnombre($id){
-		$conn = $this->db();
-		$variablequery = "select * from 01informacionpersonal  where idRelacion = '".$id."' ";
-		return $arrayquery = mysqli_query($conn,$variablequery);
-	}
+public function listadoCARGAMASIVAMnombre($id) {
+    $conn = $this->db();
+    $variablequery = "SELECT * FROM 01informacionpersonal WHERE idRelacion = '".$id."' ORDER BY NOMBRE_1 ASC"; // ASC para orden ascendente
+    return $arrayquery = mysqli_query($conn, $variablequery);
+}
 
 
 
@@ -3272,28 +3279,34 @@ public function guardarcategoriainventario ( $I_CATEGORIAS , $ICATEGORIAS ){
 		
 		
 			
-		if($ICARGAMU2 == 'ICARGAMU2'){
+if($ICARGAMU2 == 'ICARGAMU2'){
 
-		mysqli_query($conn,$var1) or die('P276'.mysqli_error($conn));
-		return "ACTUALIZADO";
-		}else{
-		mysqli_query($conn,$var2) or die('P279'.mysqli_error($conn));
-		return "INGRESADO";
-		}
-		}else{
-		echo "NO HAY UN USUARIO SELECCIONADO";	
-		}	
+    mysqli_query($conn,$var1) or die('P276'.mysqli_error($conn));
+    return "<span style='color:green; font-size:24px; font-weight:bold;'>ACTUALIZADO</span>";
+
+}else{
+
+    mysqli_query($conn,$var2) or die('P279'.mysqli_error($conn));
+    return "<span style='color:green; font-size:24px; font-weight:bold;'>INGRESADO</span>";
+
+}
+
+}else{
+    echo "NO HAY UN USUARIO SELECCIONADO";    
+}
 	}
 
 
 
 
-	public function listadoCARGAMASIVAu(){
-		$conn = $this->db();
-		$variablequery = "select * from 01CARGAMASIVAU  where idRelacion = '".$_SESSION['id']."' ";
-		return $arrayquery = mysqli_query($conn,$variablequery);
-	}
-
+public function listadoCARGAMASIVAu(){
+    $conn = $this->db();
+    $variablequery = "SELECT * 
+                      FROM 01CARGAMASIVAU  
+                      WHERE idRelacion = '".$_SESSION['id']."' 
+                      ORDER BY id DESC";
+    return $arrayquery = mysqli_query($conn,$variablequery);
+}
 
 
 
@@ -3351,15 +3364,19 @@ public function guardarcategoriainventario ( $I_CATEGORIAS , $ICATEGORIAS ){
 			
 		if($ICARGAMP222 == 'ICARGAMP222'){
 
-		mysqli_query($conn,$var1) or die('P276'.mysqli_error($conn));
-		return "ACTUALIZADO";
-		}else{
-		mysqli_query($conn,$var2) or die('P279'.mysqli_error($conn));
-		return "INGRESADO";
-		}
-		}else{
-		echo "NO HAY UN USUARIO SELECCIONADO";	
-		}	
+    mysqli_query($conn,$var1) or die('P276'.mysqli_error($conn));
+    return "<span style='color:green; font-size:24px; font-weight:bold;'>ACTUALIZADO</span>";
+
+}else{
+
+    mysqli_query($conn,$var2) or die('P279'.mysqli_error($conn));
+    return "<span style='color:green; font-size:24px; font-weight:bold;'>INGRESADO</span>";
+
+}
+
+}else{
+    echo "NO HAY UN USUARIO SELECCIONADO";    
+}
 	}
 
 
@@ -3375,11 +3392,14 @@ public function guardarcategoriainventario ( $I_CATEGORIAS , $ICATEGORIAS ){
 
 
 
-	public function listadoCARGAMASIVAPnombre($id){
-		$conn = $this->db();
-		$variablequery = "select * from 01informacionpersonal  where idRelacion = '".$id."' ";
-		return $arrayquery = mysqli_query($conn,$variablequery);
-	}
+public function listadoCARGAMASIVAPnombre($id) {
+    $conn = $this->db();
+    $variablequery = "SELECT * 
+                      FROM 01informacionpersonal  
+                      WHERE idRelacion = '".$id."' 
+                      ORDER BY NOMBRE_1 ASC"; // Orden ascendente por NOMBRE_1
+    return $arrayquery = mysqli_query($conn, $variablequery);
+}
 
 
 
