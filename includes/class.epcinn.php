@@ -1647,6 +1647,53 @@ public function revisar_usuario($conn,$USUARIO_CRM,$id){
 		mysqli_query($conn,$variablequery2);		
 		return $nuevonombre;
 		}
+		
+private function sanitizarNombreArchivo($nombrebase) {
+
+    // Decodificar %3F, %20, etc.
+    $nombrebase = urldecode($nombrebase);
+
+    // Corregir problemas de codificación UTF-8 / latin1
+    if (function_exists('mb_check_encoding') && !mb_check_encoding($nombrebase, 'UTF-8')) {
+        $nombrebase = mb_convert_encoding($nombrebase, 'UTF-8', 'ISO-8859-1');
+    }
+
+    // Limpiar caracteres inválidos UTF-8
+    if (function_exists('iconv')) {
+        $nombrebase = iconv('UTF-8', 'UTF-8//IGNORE', $nombrebase);
+    }
+
+    // Quitar caracteres conflictivos, permitir acentos y ñ
+    $nombrebase = preg_replace(
+        '/[^a-zA-Z0-9_\-áéíóúÁÉÍÓÚñÑüÜ]/u',
+        '_',
+        $nombrebase
+    );
+
+    // Colapsar guiones bajos múltiples
+    $nombrebase = preg_replace('/_+/', '_', $nombrebase);
+
+    // Quitar _ al inicio y final
+    $nombrebase = trim($nombrebase, '_');
+
+    // Limitar longitud
+    if (function_exists('mb_strlen')) {
+        if (mb_strlen($nombrebase, 'UTF-8') > 60) {
+            $nombrebase = mb_substr($nombrebase, 0, 60, 'UTF-8');
+        }
+    } else {
+        if (strlen($nombrebase) > 60) {
+            $nombrebase = substr($nombrebase, 0, 60);
+        }
+    }
+
+    // Fallback si quedó vacío
+    if ($nombrebase === '') {
+        $nombrebase = 'archivo';
+    }
+
+    return $nombrebase;
+}
 
 	public function solocargar($archivo)/*new file*/
 	{
@@ -1659,8 +1706,9 @@ public function revisar_usuario($conn,$USUARIO_CRM,$id){
 		$ext            = strtolower($extension[$cuenta]);
 
 		// ✅ nombre único para evitar sobreescribir archivos de otros registros
-		$nombrebase  = pathinfo($nombrearchivo, PATHINFO_FILENAME);
-		$nuevonombre = $nombrebase . '_' . uniqid() . '.' . $ext;
+	$nombrebase  = pathinfo($nombrearchivo, PATHINFO_FILENAME);
+    $nombrebase  = $this->sanitizarNombreArchivo($nombrebase);
+    $nuevonombre = $nombrebase . '_' . uniqid() . '.' . $ext;
 
 		if( 
 			$ext == 'pdf'  || $ext == 'gif'  || $ext == 'jpeg' ||
@@ -1692,8 +1740,9 @@ public function revisar_usuario($conn,$USUARIO_CRM,$id){
 		$ext            = strtolower($extension[$cuenta]);
 
 		// ✅ nombre único para evitar sobreescribir archivos de otros registros
-		$nombrebase  = pathinfo($nombrearchivo, PATHINFO_FILENAME);
-		$nuevonombre = $nombrebase . '_' . uniqid() . '.' . $ext;
+$nombrebase  = pathinfo($nombrearchivo, PATHINFO_FILENAME);
+$nombrebase  = $this->sanitizarNombreArchivo($nombrebase);
+$nuevonombre = $nombrebase . '_' . uniqid() . '.' . $ext;
 
 		if(
 			$ext == 'pdf'  || $ext == 'gif'  || $ext == 'jpeg' ||
@@ -1742,8 +1791,9 @@ public function revisar_usuario($conn,$USUARIO_CRM,$id){
 		$ext            = strtolower($extension[$cuenta]);
 
 		// ✅ nombre único para evitar sobreescribir archivos de otros registros
-		$nombrebase  = pathinfo($nombrearchivo, PATHINFO_FILENAME);
-		$nuevonombre = $nombrebase . '_' . uniqid() . '.' . $ext;
+$nombrebase  = pathinfo($nombrearchivo, PATHINFO_FILENAME);
+$nombrebase  = $this->sanitizarNombreArchivo($nombrebase);
+$nuevonombre = $nombrebase . '_' . uniqid() . '.' . $ext;
 
 		if( 
 			$ext == 'pdf'  || $ext == 'gif'  || $ext == 'jpeg' ||
@@ -3210,10 +3260,10 @@ if($ICARGAMM2 == 'ICARGAMM2'){
 
 public function listadoCARGAMASIVAM(){
     $conn = $this->db();
+    // Eliminar la restricción de idRelacion basada en $_SESSION['id']
     $variablequery = "SELECT * 
                       FROM 01cargamasivamateriales  
-                      WHERE idRelacion = '".$_SESSION['id']."' 
-                      ORDER BY id DESC";
+                      ORDER BY id DESC"; // Se eliminó WHERE idRelacion = '".$_SESSION['id']."' 
     return $arrayquery = mysqli_query($conn,$variablequery);
 }
 
@@ -3300,15 +3350,13 @@ if($ICARGAMU2 == 'ICARGAMU2'){
 
 
 public function listadoCARGAMASIVAu(){
-    $conn = $this->db();
+     $conn = $this->db();
+    // Eliminar la restricción de idRelacion basada en $_SESSION['id']
     $variablequery = "SELECT * 
                       FROM 01CARGAMASIVAU  
-                      WHERE idRelacion = '".$_SESSION['id']."' 
-                      ORDER BY id DESC";
+                      ORDER BY id DESC"; // Se eliminó WHERE idRelacion = '".$_SESSION['id']."' 
     return $arrayquery = mysqli_query($conn,$variablequery);
 }
-
-
 
 	public function listadoCARGAMASIVAu2($id){
 		$conn = $this->db();
@@ -3406,11 +3454,13 @@ public function listadoCARGAMASIVAPnombre($id) {
 
 
 	public function listadoCARGAMASIVAP(){
-		$conn = $this->db();
-		$variablequery = "select * from 01cargamasivap  where idRelacion = '".$_SESSION['id']."' ";
-		return $arrayquery = mysqli_query($conn,$variablequery);
-	}
-
+    $conn = $this->db();
+    // Eliminar la restricción de idRelacion basada en $_SESSION['id']
+    $variablequery = "SELECT * 
+                      FROM 01cargamasivap  
+                      ORDER BY id DESC"; // Se eliminó WHERE idRelacion = '".$_SESSION['id']."' 
+    return $arrayquery = mysqli_query($conn,$variablequery);
+}
 
 
 
